@@ -57,21 +57,22 @@ class Scafolder():
         write base files
         '''
         print 'writing base files ...'
-        files_to_write = ['run.py', 'config.py', 'requirements.txt', 'app/views/views.py', 'templates/base.html', 'templates/index.html']
 
-        for item in files_to_write:
-            
-            src_file, _ = os.path.splitext(item)
+        for file_path in self.project_files:
+            if '__.py' not in file_path: 
+                #read from source files
+                try:
+                    f = open('base_contents/' + os.path.basename(file_path).split('.')[0] + '.txt', 'r')
+                except:
+                    pass
+                else:
+                    content = f.read()
+                    f.close()
 
-            # read from source files
-            f = open('base_contents/' + os.path.basename(src_file) + '.txt', 'r')
-            content = f.read()
-            f.close()
-
-            # write to target files
-            f = open(self.project_name + item, 'w')
-            f.write(content)
-            f.close()
+                # write to target files
+                f = open(self.project_name + file_path, 'w')
+                f.write(content)
+                f.close()
         
         print 'Done!'
 
