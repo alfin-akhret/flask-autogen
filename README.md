@@ -1,4 +1,4 @@
-# Markweb
+# flask-autogen
 
 Simple Flask application generator and scafolding tools.
 
