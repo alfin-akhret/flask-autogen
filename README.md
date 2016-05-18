@@ -1,8 +1,18 @@
 # Markweb
 
-Easy to use Flask app scafolfing tools because writing the same code again and again is not fun.
+Simple Flask application generator and scafolding tools.
+
+Installation
+```sh
+$ git clone https://github.com/alfin-akhret/flask-autogen.git
+```
+
 
 How to use
 ```sh
-$ python markweb.py install --target=my_app
+$ cd flask-autogen
+$ python autogen.py install --target=your/project/dir
+$ cd your/project/dir
+$ pip install -r requirements
+$ python run.py
 ```
