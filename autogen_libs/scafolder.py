@@ -38,44 +38,44 @@ class Scafolder():
          
         for f in self.project_files:
             f = self.project_name + f
+            if '__.py' not in f: print 'create... %s' %f
             if not os.path.exists(os.path.dirname(f)):
                 try:
-                    print 'create... %s' %f
                     os.makedirs(os.path.dirname(f))
                 except OSError as e:
                     print e
                     sys.exit(1)
             open(f, 'a+').close()
+            self.__write_files(f)
 
-        print 'Done!'
+        # self.__create_virtual_environment()
 
-        self.__write_files()
-        self.__create_virtual_environment()
-
-    def __write_files(self):
+    
+    def __write_files(self, file_path):
         '''
-        write base files
+        write into base files
         '''
-        print 'writing base files ...'
+        content = ''
+        if '__.py' not in file_path: 
+            #read from source files
+            try:
+                f = open('base_contents/' + os.path.basename(file_path).split('.')[0] + '.txt', 'r')
+            except:
+                pass
+            else:
+                content = f.read()
+                f.close()
 
-        for file_path in self.project_files:
-            if '__.py' not in file_path: 
-                #read from source files
-                try:
-                    f = open('base_contents/' + os.path.basename(file_path).split('.')[0] + '.txt', 'r')
-                except:
-                    pass
-                else:
-                    content = f.read()
-                    f.close()
-
-                # write to target files
-                f = open(self.project_name + file_path, 'w')
+            # write to target files
+            try:
+                f = open(file_path, 'w')
+            except:
+                pass
+            else:
                 f.write(content)
                 f.close()
-        
-        print 'Done!'
 
+    
     def __create_virtual_environment(self):
         '''
         create project virtual environment
