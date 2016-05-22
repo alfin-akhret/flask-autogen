@@ -38,7 +38,8 @@ class Scafolder():
          
         for f in self.project_files:
             f = self.project_name + f
-            if '__.py' not in f: print 'create... %s' %f
+            if '__.py' not in f:
+                print 'create... %s' %f
             if not os.path.exists(os.path.dirname(f)):
                 try:
                     os.makedirs(os.path.dirname(f))
@@ -47,8 +48,8 @@ class Scafolder():
                     sys.exit(1)
             open(f, 'a+').close()
             self.__write_files(f)
-
-        # self.__create_virtual_environment()
+        else:
+            self.__create_virtual_environment()
 
     
     def __write_files(self, file_path):

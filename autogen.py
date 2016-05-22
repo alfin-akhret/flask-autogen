@@ -16,13 +16,16 @@ Options:
 
 """
 from docopt import docopt
-from autogen_libs.scafolder import Scafolder 
+from autogen_libs.scafolder import Scafolder
+import sys 
 
-def install(target):
-    if target is None:
-        target = '.'
-    scafolder = Scafolder(target)
-    scafolder.install()
+def install(target=None):
+    if target:
+        scafolder = Scafolder(target)
+        scafolder.install()
+    else:
+        print 'No target folder specified'
+        sys.exit(1)
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='Markweb 0.0.1')
