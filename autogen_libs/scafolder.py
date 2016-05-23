@@ -33,7 +33,7 @@ class Scafolder():
                 print e
                 sys.exit(1)
         
-        # self.__create_virtual_environment()
+        self.__create_virtual_environment()
 
     
     def __unzipper(self, file_to_unzip, outpath):
