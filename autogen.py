@@ -22,7 +22,7 @@ import sys
 def install(target=None):
     if target:
         scafolder = Scafolder(target)
-        scafolder.install()
+        # scafolder.install()
     else:
         print 'No target folder specified'
         sys.exit(1)

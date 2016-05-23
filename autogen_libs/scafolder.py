@@ -3,6 +3,7 @@
 # @author alfin.akhret@gmail.com
 import os
 import sys
+from file_hierarchy import FILES_HIERARCHY
 
 class Scafolder():
     '''
@@ -11,20 +12,7 @@ class Scafolder():
     '''
     def __init__(self, project_name):
         self.project_name = project_name + '/'
-        self.project_files = [
-            '__init__.py',
-            'run.py',
-            'config.py',
-            'requirements.txt',
-            'templates/base.html',
-            'templates/index.html',
-            'app/__init__.py',
-            'app/views/__init__.py',
-            'app/views/views.py',
-            'static/js/app.js',
-            'static/css/style.css',
-            'static/images/none.txt'
-            ]
+        self.project_files = FILES_HIERARCHY
 
     def install(self):
         '''
