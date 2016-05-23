@@ -7,8 +7,8 @@
 """Naval Fate.
 
 Usage:
-  markweb install [--target=PROJECT_FOLDER]
-  markweb --version
+  autogen install [--target=PROJECT_FOLDER, --type=PROJECT_TYPE]
+  autogen --version
 
 Options:
   -h --help     Show this screen.
@@ -19,16 +19,15 @@ from docopt import docopt
 from autogen_libs.scafolder import Scafolder
 import sys 
 
-def install(target=None):
+def install(target=None, project_type=None):
     if target:
-        scafolder = Scafolder(target)
-        # scafolder.install()
+        scafolder = Scafolder(target, project_type)
+        scafolder.install()
     else:
-        print 'No target folder specified'
         sys.exit(1)
 
 if __name__ == '__main__':
-    args = docopt(__doc__, version='Markweb 0.0.1')
+    args = docopt(__doc__, version='Autogen 0.0.1')
     # print args
     if args['install']:
-        install(args['--target'])
+        install(args['--target'], args['--type'])

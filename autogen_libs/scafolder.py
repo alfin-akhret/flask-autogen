@@ -3,16 +3,16 @@
 # @author alfin.akhret@gmail.com
 import os
 import sys
-from file_hierarchy import FILES_HIERARCHY
+import zipfile
 
 class Scafolder():
     '''
     Scafold basic flash directory structures
     and files
     '''
-    def __init__(self, project_name):
+    def __init__(self, project_name, project_type):
         self.project_name = project_name + '/'
-        self.project_files = FILES_HIERARCHY
+        self.project_type = project_type
 
     def install(self):
         '''
@@ -23,48 +23,27 @@ class Scafolder():
         ''' 
 
         print 'Creating project folders and files'
-         
-        for f in self.project_files:
-            f = self.project_name + f
-            if '__.py' not in f:
-                print 'create... %s' %f
-            if not os.path.exists(os.path.dirname(f)):
-                try:
-                    os.makedirs(os.path.dirname(f))
-                except OSError as e:
-                    print e
-                    sys.exit(1)
-            open(f, 'a+').close()
-            self.__write_files(f)
-        else:
-            self.__create_virtual_environment()
+
+        base_contents = 'base_contents/' + self.project_type + '.zip'
+        print base_contents
+        if os.path.exists(base_contents):
+            try:
+                self.__unzipper(base_contents, self.project_name)
+            except OSError as e:
+                print e
+                sys.exit(1)
+        
+        # self.__create_virtual_environment()
 
     
-    def __write_files(self, file_path):
-        '''
-        write into base files
-        '''
-        content = ''
-        if '__.py' not in file_path: 
-            #read from source files
-            try:
-                f = open('base_contents/' + os.path.basename(file_path).split('.')[0] + '.txt', 'r')
-            except:
-                pass
-            else:
-                content = f.read()
-                f.close()
+    def __unzipper(self, file_to_unzip, outpath):
+        fh = open(file_to_unzip, 'rb')
+        z = zipfile.ZipFile(fh)
+        for name in z.namelist():
+            z.extract(name, outpath)
+            print 'writing...' + name
+        fh.close()
 
-            # write to target files
-            try:
-                f = open(file_path, 'w')
-            except:
-                pass
-            else:
-                f.write(content)
-                f.close()
-
-    
     def __create_virtual_environment(self):
         '''
         create project virtual environment
@@ -81,7 +60,10 @@ if __name__ == '__main__':
 
     if len(sys.argv) > 1:
         project_name = sys.argv[1]
+        project_type = sys.argv[2]
     else:
         project_name = '.'
-    scafolder = Scafolder(project_name)
+    scafolder = Scafolder(project_name, project_type)
     scafolder.install()
+
+
